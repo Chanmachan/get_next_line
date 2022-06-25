@@ -98,14 +98,18 @@ char	*get_next_line(int fd)
 #include <fcntl.h>//open
 #include <stdio.h>
 
-int main(void)
+/*__attribute__((destructor))
+static void destructor() {
+	system("leaks -q a.out");
+}*/
+/*int main(void)
 {
 	char 	*str;
 	int 	fd;
 	size_t 	i;
 
 	i = 0;
-	fd = open("test.txt", O_RDONLY);
+	fd = open("test00.txt", O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(fd);
@@ -116,7 +120,7 @@ int main(void)
 		i++;
 	}
 	close(fd);
-	system("leaks a.out");
+//	system("leaks a.out");
 	return (0);
-}
+}*/
 //-fsanitize=address -g
