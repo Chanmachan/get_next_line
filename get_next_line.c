@@ -58,9 +58,7 @@ char	*delete_last_line(char *str)
 		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
-	{
 		i++;
-	}
 	if (str[i] == '\n')
 		i++;
 	str = str + i;
