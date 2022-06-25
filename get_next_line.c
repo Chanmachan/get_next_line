@@ -8,13 +8,14 @@ char	*read_lines(char *str, int fd)
 {
 	char	*buf;
 	int 	rd_bytes;
+	char 	*tmp;
 
-	buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (buf == NULL)
-		return (NULL);
 	rd_bytes = 1;
 	while (rd_bytes != 0)
 	{
+		buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (buf == NULL)
+			return (NULL);
 		//readで.txt読み込み
 		rd_bytes = read(fd, buf, BUFFER_SIZE);
 		if (rd_bytes == -1)
@@ -23,11 +24,15 @@ char	*read_lines(char *str, int fd)
 			return (NULL);
 		}
 		buf[rd_bytes] = '\0';
+		tmp = str;
 		str = ft_strjoin(str, buf);
+		free(tmp);
+		free(buf);
 	}
-	free(buf);
 	return (str);
 }
+//char *tmp = &str
+//joinした後のstrと前のstrは違うからfree注意
 
 char	*get_one_line(char *str)
 {
@@ -39,19 +44,15 @@ char	*get_one_line(char *str)
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
-	if (str[i] == '\n')
-		i++;
-	rtn_str = (char *) malloc(sizeof(char) * (i + 1));
+	rtn_str = ft_substr(rtn_str, 0, i + 1);
 	if (rtn_str == NULL)
 		return (NULL);
-	ft_strlcpy(rtn_str, str, i + 1);
 	return (rtn_str);
 }
 
 char	*delete_last_line(char *str)
 {
 	size_t 	i;
-	size_t 	len_new_str;
 	char	*new_str;
 
 	if (str == NULL)
@@ -61,13 +62,10 @@ char	*delete_last_line(char *str)
 		i++;
 	if (str[i] == '\n')
 		i++;
-	str = str + i;
-	len_new_str = ft_strlen(str);
-	new_str = (char *) malloc(sizeof(char) * (len_new_str + 1));
+	new_str = ft_substr(str, i, ft_strlen(str) - i);
 	if (new_str == NULL)
-		return (new_str);
-	ft_strlcpy(new_str, str, len_new_str + 1);
-	str = str - i;
+		return (NULL);
+	printf("dll : %p\n", new_str);
 	free(str);
 	return (new_str);
 }
@@ -89,7 +87,7 @@ char	*get_next_line(int fd)
 }
 
 
-/*#include <fcntl.h>//open
+#include <fcntl.h>//open
 #include <stdio.h>
 
 int main(void)
@@ -104,8 +102,11 @@ int main(void)
 	{
 		str = get_next_line(fd);
 		printf("[%zu] : %s\n-------------\n", i, str);
+		free(str);
 		i++;
 	}
 	close(fd);
+	system("leaks a.out");
 	return (0);
-}*/
+}
+//-fsanitize=address -g

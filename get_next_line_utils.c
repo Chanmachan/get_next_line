@@ -81,9 +81,54 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (rtn_str == NULL)
 		return (NULL);
 	ft_strlcpy(rtn_str, s1, ft_strlen(s1) + 1);
-	ft_strlcat(rtn_str, s2, len_rtn_str + 1);;
+	ft_strlcat(rtn_str, s2, len_rtn_str + 1);
 	return (rtn_str);
 }
+
+char	*ft_strdup(char *str)
+{
+	size_t	i;
+	size_t	len;
+	char	*rtn_str;
+
+	len = ft_strlen(str);
+	rtn_str = (char *) malloc (sizeof(char) * (len + 1));
+	if (rtn_str == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len && str[i] != '\0')
+	{
+		rtn_str[i] = str[i];
+		i++;
+	}
+	rtn_str[i] = '\0';
+	return (rtn_str);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char *new_s;
+	char *rtn_str;
+	unsigned int 	len_s;
+
+	i = 0;
+	new_s = (char *) s;
+	len_s = (unsigned int)ft_strlen(s);
+	if (len_s < start)
+	{
+		rtn_str = ft_strdup("\0");
+		return (rtn_str);
+	}
+	rtn_str = (char *) malloc (sizeof(char) * (ft_strlen(s) - start + 1));
+	if (rtn_str == NULL)
+		return (NULL);
+	while (i < len && new_s[start] != '\0')
+		rtn_str[i++] = new_s[start++];
+	rtn_str[i] = '\0';
+	return (rtn_str);
+}
+
 //if (s1 == NULL) added to solve the segfault
 
 
