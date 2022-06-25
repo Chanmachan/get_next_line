@@ -44,7 +44,7 @@ char	*get_one_line(char *str)
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
-	rtn_str = ft_substr(rtn_str, 0, i + 1);
+	rtn_str = ft_substr(str, 0, i + 1);
 	if (rtn_str == NULL)
 		return (NULL);
 	return (rtn_str);
@@ -65,7 +65,6 @@ char	*delete_last_line(char *str)
 	new_str = ft_substr(str, i, ft_strlen(str) - i);
 	if (new_str == NULL)
 		return (NULL);
-	printf("dll : %p\n", new_str);
 	free(str);
 	return (new_str);
 }
@@ -87,7 +86,7 @@ char	*get_next_line(int fd)
 }
 
 
-#include <fcntl.h>//open
+/*#include <fcntl.h>//open
 #include <stdio.h>
 
 int main(void)
@@ -108,5 +107,5 @@ int main(void)
 	close(fd);
 	system("leaks a.out");
 	return (0);
-}
+}*/
 //-fsanitize=address -g
