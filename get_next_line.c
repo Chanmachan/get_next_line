@@ -7,11 +7,12 @@
 char	*read_lines(char *str, int fd)
 {
 	char	*buf;
-	int 	rd_bytes;
+	ssize_t 	rd_bytes;
+	 //ssize_t return
 	char 	*tmp;
 
 	rd_bytes = 1;
-	while (rd_bytes != 0)
+	while (rd_bytes != 0 && !ft_strchr(str, '\n'))
 	{
 		buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (buf == NULL)
@@ -39,7 +40,7 @@ char	*get_one_line(char *str)
 	size_t 	i;
 	char	*rtn_str;
 
-	if (str == NULL)
+	if (str[0] == '\0')
 		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
@@ -60,9 +61,12 @@ char	*delete_last_line(char *str)
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
-	if (str[i] == '\n')
-		i++;
-	new_str = ft_substr(str, i, ft_strlen(str) - i);
+	if (str[i] == '\0')
+	{
+		free(str);
+		return (NULL);
+	}
+	new_str = ft_substr(str, i + 1, ft_strlen(str));
 	if (new_str == NULL)
 		return (NULL);
 	free(str);
@@ -74,19 +78,24 @@ char	*get_next_line(int fd)
 	static char *str;
 	char		*rtn_str;
 
+	if (BUFFER_SIZE <= 0)
+		return (NULL);
 	//strにread_line関数を作って読み込む
 	str = read_lines(str, fd);
-	if (str == NULL)
+	if (!str)
 		return (NULL);
 	//strの一行目をrtn_strにうつす
 	rtn_str = get_one_line(str);
+	if (rtn_str == NULL)
+		return (NULL);
 	//もういらない部分を取り除く
 	str = delete_last_line(str);
 	return (rtn_str);
 }
 
 
-/*#include <fcntl.h>//open
+
+#include <fcntl.h>//open
 #include <stdio.h>
 
 int main(void)
@@ -97,15 +106,17 @@ int main(void)
 
 	i = 0;
 	fd = open("test.txt", O_RDONLY);
-	while (i < 4)
+	while (1)
 	{
 		str = get_next_line(fd);
 		printf("[%zu] : %s\n-------------\n", i, str);
+		if (str == NULL)
+			break;
 		free(str);
 		i++;
 	}
 	close(fd);
 	system("leaks a.out");
 	return (0);
-}*/
+}
 //-fsanitize=address -g

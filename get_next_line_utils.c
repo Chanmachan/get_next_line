@@ -15,6 +15,24 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
+char 	*ft_strchr(char *str, int c)
+{
+	size_t	i;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	if (!c)
+		return ((char *)&str[ft_strlen(str)]);
+	while (str[i] != '\0')
+	{
+		if (str[i] == (char) c)
+			return ((char *)&str[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 {
 	size_t	i;
