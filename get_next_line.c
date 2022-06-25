@@ -38,9 +38,7 @@ char	*get_one_line(char *str)
 		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
-	{
 		i++;
-	}
 	if (str[i] == '\n')
 		i++;
 	rtn_str = (char *) malloc(sizeof(char) * (i + 1));
@@ -82,7 +80,7 @@ char	*get_next_line(int fd)
 	char		*rtn_str;
 
 	//strにread_line関数を作って読み込む
-	str = read_line(str, fd);
+	str = read_lines(str, fd);
 	if (str == NULL)
 		return (NULL);
 	//strの一行目をrtn_strにうつす
@@ -92,8 +90,8 @@ char	*get_next_line(int fd)
 	return (rtn_str);
 }
 
-/*
-#include <fcntl.h>//open
+
+/*#include <fcntl.h>//open
 #include <stdio.h>
 
 int main(void)
