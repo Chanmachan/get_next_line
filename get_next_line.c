@@ -41,15 +41,38 @@ char	*get_one_line(char *str)
 	{
 		i++;
 	}
+	if (str[i] == '\n')
+		i++;
+//	printf("gol : %zu\n", i);
 	rtn_str = (char *) malloc(sizeof(char) * (i + 1));
-	ft_strlcpy(rtn_str, str, i);
+	ft_strlcpy(rtn_str, str, i + 1);
 	return (rtn_str);
 }
 
-/*char	*delete_last_line(char *str, fd)
+char	*delete_last_line(char *str)
 {
+	size_t 	i;
+	size_t 	len_new_str;
+	char	*new_str;
 
-}*/
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (str[i] != '\n' && str[i] != '\0')
+	{
+		i++;
+	}
+	if (str[i] == '\n')
+		i++;
+	str = str + i;
+	len_new_str = ft_strlen(str);
+	/*printf("str : \n%s\n", str);
+	printf("len_new_str : %zu\n", len_new_str);*/
+	new_str = (char *) malloc(sizeof(char) * (len_new_str + 1));
+	i = 0;
+	ft_strlcpy(new_str, str, len_new_str + 1);
+	return (new_str);
+}
 
 char	*get_next_line(int fd)
 {
@@ -58,11 +81,10 @@ char	*get_next_line(int fd)
 
 	//strにread_line関数を作って読み込む
 	str = read_line(str, fd);
-	printf("str : \n%s\n-----------", str);
 	//strの一行目をrtn_strにうつす
 	rtn_str = get_one_line(str);
 	//もういらない部分を取り除く
-//	str = delete_last_line(str, fd);
+	str = delete_last_line(str);
 	return (rtn_str);
 }
 
@@ -77,10 +99,10 @@ int main(void)
 
 	i = 0;
 	fd = open("test.txt", O_RDONLY);
-	while (i < 6)
+	while (i < 4)
 	{
 		str = get_next_line(fd);
-		printf("[%zu] : %s\n", i, str);
+		printf("[%zu] : %s\n-------------\n", i, str);
 		i++;
 	}
 	close(fd);
