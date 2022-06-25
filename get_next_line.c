@@ -17,17 +17,13 @@ char	*read_line(char *str, int fd)
 	{
 		//readで.txt読み込み
 		rd_bytes = read(fd, buf, BUFFER_SIZE);
-		printf("buf : \n%s\n", buf);
 		if (rd_bytes == -1)
 		{
 			free(buf);
 			return (NULL);
 		}
-		printf("test00\n");
 		buf[rd_bytes] = '\0';
-		printf("test01\n");
 		str = ft_strjoin(str, buf);
-		printf("test02\n");
 	}
 	free(buf);
 	return (str);
