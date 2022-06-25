@@ -74,7 +74,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		s1 = (char *) malloc(sizeof(char) * 1);
 		s1[0] = '\0';
 	}
-	len_rtn_str = (s1 ? ft_strlen(s1) + ft_strlen(s2) : (0 + ft_strlen(s2)));
+	len_rtn_str = ft_strlen(s1) + ft_strlen(s2);
 	rtn_str = (char *) malloc (sizeof(char) * (len_rtn_str + 1));
 	if (rtn_str == NULL)
 		return (NULL);
@@ -82,26 +82,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_strlcat(rtn_str, s2, len_rtn_str + 1);;
 	return (rtn_str);
 }
-
-char	*ft_strdup(char *str)
-{
-	size_t	i;
-	size_t	len;
-	char	*rtn_str;
-
-	len = ft_strlen(str);
-	rtn_str = (char *) malloc (sizeof(char) * (len + 1));
-	if (rtn_str == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len && str[i] != '\0')
-	{
-		rtn_str[i] = str[i];
-		i++;
-	}
-	rtn_str[i] = '\0';
-	return (rtn_str);
-}
+//if (s1 == NULL) added to solve the segfault
 
 
 /*#include <string.h>

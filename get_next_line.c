@@ -43,8 +43,9 @@ char	*get_one_line(char *str)
 	}
 	if (str[i] == '\n')
 		i++;
-//	printf("gol : %zu\n", i);
 	rtn_str = (char *) malloc(sizeof(char) * (i + 1));
+	if (rtn_str == NULL)
+		return (NULL);
 	ft_strlcpy(rtn_str, str, i + 1);
 	return (rtn_str);
 }
@@ -66,11 +67,12 @@ char	*delete_last_line(char *str)
 		i++;
 	str = str + i;
 	len_new_str = ft_strlen(str);
-	/*printf("str : \n%s\n", str);
-	printf("len_new_str : %zu\n", len_new_str);*/
 	new_str = (char *) malloc(sizeof(char) * (len_new_str + 1));
-	i = 0;
+	if (new_str == NULL)
+		return (new_str);
 	ft_strlcpy(new_str, str, len_new_str + 1);
+	str = str - i;
+	free(str);
 	return (new_str);
 }
 
@@ -81,6 +83,8 @@ char	*get_next_line(int fd)
 
 	//strにread_line関数を作って読み込む
 	str = read_line(str, fd);
+	if (str == NULL)
+		return (NULL);
 	//strの一行目をrtn_strにうつす
 	rtn_str = get_one_line(str);
 	//もういらない部分を取り除く
@@ -88,6 +92,7 @@ char	*get_next_line(int fd)
 	return (rtn_str);
 }
 
+/*
 #include <fcntl.h>//open
 #include <stdio.h>
 
@@ -107,4 +112,4 @@ int main(void)
 	}
 	close(fd);
 	return (0);
-}
+}*/
