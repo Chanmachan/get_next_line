@@ -4,7 +4,7 @@
 
 #include "get_next_line.h"
 
-char	*read_line(char *str, int fd)
+char	*read_lines(char *str, int fd)
 {
 	char	*buf;
 	int 	rd_bytes;
