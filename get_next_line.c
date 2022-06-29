@@ -17,7 +17,6 @@ char	*read_lines(char *str, int fd)
 		buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (buf == NULL)
 			return (NULL);
-		//readで.txt読み込み
 		rd_bytes = read(fd, buf, BUFFER_SIZE);
 		if (rd_bytes == -1)
 		{
@@ -47,7 +46,10 @@ char	*get_one_line(char *str)
 		i++;
 	rtn_str = ft_substr(str, 0, i + 1);
 	if (rtn_str == NULL)
+	{
+		free(str);
 		return (NULL);
+	}
 	return (rtn_str);
 }
 
@@ -62,10 +64,7 @@ char	*delete_last_line(char *str)
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
 	if (str[i] == '\0')
-	{
-		free(str);
 		return (NULL);
-	}
 	new_str = ft_substr(str, i + 1, ft_strlen(str));
 	if (new_str == NULL)
 		return (NULL);
@@ -113,7 +112,7 @@ static void destructor() {
 	while (1)
 	{
 		str = get_next_line(fd);
-		printf("[%zu] : %s\n-------------\n", i, str);
+//		printf("[%zu] : %s\n-------------\n", i, str);
 		if (str == NULL)
 			break;
 		free(str);
