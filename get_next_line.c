@@ -29,6 +29,7 @@ char	*read_lines(char *str, int fd)
 		free(tmp);
 		free(buf);
 	}
+	printf("%p\n", str);
 	return (str);
 }
 //char *tmp = &str
@@ -97,22 +98,23 @@ char	*get_next_line(int fd)
 #include <fcntl.h>//open
 #include <stdio.h>
 
-/*__attribute__((destructor))
+__attribute__((destructor))
 static void destructor() {
 	system("leaks -q a.out");
-}*/
-/*int main(void)
+}
+int main(void)
 {
 	char 	*str;
 	int 	fd;
 	size_t 	i;
 
 	i = 0;
-	fd = open("test00.txt", O_RDONLY);
+	fd = open("text00.txt", O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(fd);
 //		printf("[%zu] : %s\n-------------\n", i, str);
+		printf("str : [%s]\n", str);
 		if (str == NULL)
 			break;
 		free(str);
@@ -121,5 +123,5 @@ static void destructor() {
 	close(fd);
 //	system("leaks a.out");
 	return (0);
-}*/
+}
 //-fsanitize=address -g
