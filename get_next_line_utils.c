@@ -82,27 +82,6 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	return (len_dst + len_src);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*rtn_str;
-	size_t	len_rtn_str;
-
-	if (s1 == NULL)
-	{
-		s1 = (char *) malloc(sizeof(char) * 1);
-		if (s1 == NULL)
-			return (NULL);
-		s1[0] = '\0';
-	}
-	len_rtn_str = ft_strlen(s1) + ft_strlen(s2);
-	rtn_str = (char *) malloc (sizeof(char) * (len_rtn_str + 1));
-	if (rtn_str == NULL)
-		return (NULL);
-	ft_strlcpy(rtn_str, s1, ft_strlen(s1) + 1);
-	ft_strlcat(rtn_str, s2, len_rtn_str + 1);
-	return (rtn_str);
-}
-
 char	*ft_strdup(char *str)
 {
 	size_t	i;
@@ -120,6 +99,28 @@ char	*ft_strdup(char *str)
 		i++;
 	}
 	rtn_str[i] = '\0';
+	return (rtn_str);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*rtn_str;
+	size_t	len_rtn_str;
+
+	if (s1 == NULL)
+	{
+		s1 = (char *) malloc(sizeof(char) * 1);
+		if (s1 == NULL)
+			return (NULL);
+		printf("%p\n", s1);
+		s1[0] = '\0';
+	}
+	len_rtn_str = ft_strlen(s1) + ft_strlen(s2);
+	rtn_str = (char *) malloc (sizeof(char) * (len_rtn_str + 1));
+	if (rtn_str == NULL)
+		return (NULL);
+	ft_strlcpy(rtn_str, s1, ft_strlen(s1) + 1);
+	ft_strlcat(rtn_str, s2, len_rtn_str + 1);
 	return (rtn_str);
 }
 

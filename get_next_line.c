@@ -29,7 +29,6 @@ char	*read_lines(char *str, int fd)
 		free(tmp);
 		free(buf);
 	}
-	printf("%p\n", str);
 	return (str);
 }
 //char *tmp = &str
@@ -41,7 +40,9 @@ char	*get_one_line(char *str)
 	char	*rtn_str;
 
 	if (str[0] == '\0')
+	{
 		return (NULL);
+	}
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
@@ -59,16 +60,23 @@ char	*delete_last_line(char *str)
 	size_t 	i;
 	char	*new_str;
 
-	if (str == NULL)
+	if (str == NULL || str[0] == '\0')
+	{
+		free(str);
 		return (NULL);
+	}
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
 	if (str[i] == '\0')
+	{
 		return (NULL);
+	}
 	new_str = ft_substr(str, i + 1, ft_strlen(str));
 	if (new_str == NULL)
+	{
 		return (NULL);
+	}
 	free(str);
 	return (new_str);
 }
@@ -83,11 +91,11 @@ char	*get_next_line(int fd)
 	//strにread_line関数を作って読み込む
 	str = read_lines(str, fd);
 	if (!str)
+	{
 		return (NULL);
+	}
 	//strの一行目をrtn_strにうつす
 	rtn_str = get_one_line(str);
-	if (rtn_str == NULL)
-		return (NULL);
 	//もういらない部分を取り除く
 	str = delete_last_line(str);
 	return (rtn_str);
@@ -95,7 +103,7 @@ char	*get_next_line(int fd)
 
 
 
-#include <fcntl.h>//open
+/*#include <fcntl.h>//open
 #include <stdio.h>
 
 __attribute__((destructor))
@@ -115,6 +123,7 @@ int main(void)
 		str = get_next_line(fd);
 //		printf("[%zu] : %s\n-------------\n", i, str);
 		printf("str : [%s]\n", str);
+		printf("%p\n", str);
 		if (str == NULL)
 			break;
 		free(str);
@@ -123,5 +132,5 @@ int main(void)
 	close(fd);
 //	system("leaks a.out");
 	return (0);
-}
+}*/
 //-fsanitize=address -g
