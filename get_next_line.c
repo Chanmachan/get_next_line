@@ -70,6 +70,7 @@ char	*delete_last_line(char *str)
 		i++;
 	if (str[i] == '\0')
 	{
+		free(str);
 		return (NULL);
 	}
 	new_str = ft_substr(str, i + 1, ft_strlen(str));
@@ -117,13 +118,11 @@ int main(void)
 	size_t 	i;
 
 	i = 0;
-	fd = open("text00.txt", O_RDONLY);
+	fd = open("41_no_nl.txt", O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(fd);
 //		printf("[%zu] : %s\n-------------\n", i, str);
-		printf("str : [%s]\n", str);
-		printf("%p\n", str);
 		if (str == NULL)
 			break;
 		free(str);
