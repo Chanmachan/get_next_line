@@ -39,9 +39,7 @@ char	*get_one_line(char *str)
 	char	*rtn_str;
 
 	if (str[0] == '\0')
-	{
 		return (NULL);
-	}
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
@@ -74,9 +72,7 @@ char	*delete_last_line(char *str)
 	}
 	new_str = ft_substr(str, i + 1, ft_strlen(str));
 	if (new_str == NULL)
-	{
 		return (NULL);
-	}
 	free(str);
 	return (new_str);
 }
@@ -86,7 +82,7 @@ char	*get_next_line(int fd)
 	static char *str;
 	char		*rtn_str;
 
-	if (BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	str = read_lines(str, fd);
 	if (!str)
@@ -111,7 +107,7 @@ int main(void)
 	size_t 	i;
 
 	i = 0;
-	fd = open("null.txt", O_RDONLY);
+	fd = open("../null.txt", O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(fd);

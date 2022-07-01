@@ -9,9 +9,7 @@ size_t	ft_strlen(const char *str)
 
 	i = 0;
 	while (str[i] != '\0')
-	{
 		i++;
-	}
 	return (i);
 }
 
@@ -41,9 +39,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 	i = 0;
 	len_src = ft_strlen(src);
 	if (n == 0)
-	{
 		return (len_src);
-	}
 	while (i < n - 1 && src[i] != '\0')
 	{
 		dest[i] = src[i];
@@ -123,7 +119,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_strlcat(rtn_str, s2, len_rtn_str + 1);
 	return (rtn_str);
 }
-//s1[0] = '\0'がないとごみが入ってしまう
+//if (s1 == NULL)の処理がないとファイルがからの時にうまくいかない
+//s1[0] = '\0'をいれてfreeしないとごみが入ってしまう
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
