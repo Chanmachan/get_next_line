@@ -112,6 +112,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		s1 = (char *) malloc(sizeof(char) * 1);
 		if (s1 == NULL)
 			return (NULL);
+		s1[0] = '\0';
 		free(s1);
 	}
 	len_rtn_str = ft_strlen(s1) + ft_strlen(s2);
@@ -122,6 +123,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_strlcat(rtn_str, s2, len_rtn_str + 1);
 	return (rtn_str);
 }
+//s1[0] = '\0'がないとごみが入ってしまう
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

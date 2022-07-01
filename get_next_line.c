@@ -6,9 +6,8 @@
 
 char	*read_lines(char *str, int fd)
 {
-	char	*buf;
+	char		*buf;
 	ssize_t 	rd_bytes;
-	 //ssize_t return
 	char 	*tmp;
 
 	rd_bytes = 1;
@@ -89,19 +88,13 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0)
 		return (NULL);
-	//strにread_line関数を作って読み込む
 	str = read_lines(str, fd);
 	if (!str)
-	{
 		return (NULL);
-	}
-	//strの一行目をrtn_strにうつす
 	rtn_str = get_one_line(str);
-	//もういらない部分を取り除く
 	str = delete_last_line(str);
 	return (rtn_str);
 }
-
 
 
 /*#include <fcntl.h>//open
@@ -118,11 +111,12 @@ int main(void)
 	size_t 	i;
 
 	i = 0;
-	fd = open("41_no_nl.txt", O_RDONLY);
+	fd = open("null.txt", O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(fd);
 //		printf("[%zu] : %s\n-------------\n", i, str);
+		printf("str : [%s]\n", str);
 		if (str == NULL)
 			break;
 		free(str);
