@@ -1,6 +1,15 @@
-//
-// Created by 本間優之介 on 2022/06/20.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hommayunosuke <hommayunosuke@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/12 03:09:05 by hommayunosu       #+#    #+#             */
+/*   Updated: 2022/07/12 03:09:06 by hommayunosu      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 size_t	ft_strlen(const char *str)
@@ -13,7 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char 	*ft_strchr(char *str, int c)
+char	*ft_strchr(char *str, int c)
 {
 	size_t	i;
 
@@ -124,10 +133,10 @@ char	*ft_strjoin(char *s1, char *s2)
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	i;
-	char *new_s;
-	char *rtn_str;
-	unsigned int 	len_s;
+	size_t			i;
+	char			*new_s;
+	char			*rtn_str;
+	unsigned int	len_s;
 
 	i = 0;
 	new_s = (char *) s;
@@ -147,7 +156,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 }
 
 //if (s1 == NULL) added to solve the segfault
-
 
 /*#include <string.h>
 #include <stdio.h>

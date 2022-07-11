@@ -1,14 +1,22 @@
-//
-// Created by 本間優之介 on 2022/06/20.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hommayunosuke <hommayunosuke@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/12 03:09:09 by hommayunosu       #+#    #+#             */
+/*   Updated: 2022/07/12 03:09:10 by hommayunosu      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "get_next_line.h"
 
 char	*read_lines(char *str, int fd)
 {
 	char		*buf;
-	ssize_t 	rd_bytes;
-	char 	*tmp;
+	ssize_t		rd_bytes;
+	char		*tmp;
 
 	rd_bytes = 1;
 	while (rd_bytes != 0 && !ft_strchr(str, '\n'))
@@ -30,12 +38,10 @@ char	*read_lines(char *str, int fd)
 	}
 	return (str);
 }
-//char *tmp = &str
-//joinした後のstrと前のstrは違うからfree注意
 
 char	*get_one_line(char *str)
 {
-	size_t 	i;
+	size_t	i;
 	char	*rtn_str;
 
 	if (str[0] == '\0')
@@ -54,7 +60,7 @@ char	*get_one_line(char *str)
 
 char	*delete_last_line(char *str)
 {
-	size_t 	i;
+	size_t	i;
 	char	*new_str;
 
 	if (str == NULL || str[0] == '\0')
@@ -79,7 +85,7 @@ char	*delete_last_line(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char *str;
+	static char	*str;
 	char		*rtn_str;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
@@ -91,7 +97,6 @@ char	*get_next_line(int fd)
 	str = delete_last_line(str);
 	return (rtn_str);
 }
-
 
 /*#include <fcntl.h>//open
 #include <stdio.h>
