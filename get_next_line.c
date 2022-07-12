@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_strchr(char *str, int c)
+static char	*ft_strchr(char *str, int c)
 {
 	size_t	i;
 

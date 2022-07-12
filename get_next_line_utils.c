@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t n)
+static size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 {
 	size_t	i;
 	size_t	len_src;
@@ -40,7 +40,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 	return (len_src);
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+static size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	len_dst;
 	size_t	len_src;
