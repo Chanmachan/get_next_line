@@ -12,6 +12,24 @@
 
 #include "get_next_line.h"
 
+char	*ft_strchr(char *str, int c)
+{
+	size_t	i;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	if (!c)
+		return ((char *)&str[ft_strlen(str)]);
+	while (str[i] != '\0')
+	{
+		if (str[i] == (char) c)
+			return ((char *)&str[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 char	*read_lines(char *str, int fd)
 {
 	char		*buf;
