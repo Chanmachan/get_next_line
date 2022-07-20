@@ -12,21 +12,23 @@
 
 #include "get_next_line.h"
 
-static char	*ft_strchr(char *str, int c)
+static char	*ft_strchr(char *s, int c)
 {
+	char	*new_s;
 	size_t	i;
 
+	new_s = (char *) s;
 	i = 0;
-	if (!str)
+	if (!s)
 		return (NULL);
-	if (!c)
-		return ((char *)&str[ft_strlen(str)]);
-	while (str[i] != '\0')
+	while (new_s[i] != '\0')
 	{
-		if (str[i] == (char) c)
-			return ((char *)&str[i]);
+		if (new_s[i] == (char) c)
+			return (new_s + i);
 		i++;
 	}
+	if ((char) c == '\0')
+		return (new_s + i);
 	return (NULL);
 }
 
@@ -66,8 +68,12 @@ char	*get_one_line(char *str)
 		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
+	{
 		i++;
-	rtn_str = ft_substr(str, 0, i + 1);
+	}
+	if (str[i] == '\n')
+		i++;
+	rtn_str = ft_substr(str, 0, i);
 	if (rtn_str == NULL)
 	{
 		free(str);
@@ -76,16 +82,13 @@ char	*get_one_line(char *str)
 	return (rtn_str);
 }
 
+//str[0] == '\0' if empty
+
 char	*delete_last_line(char *str)
 {
 	size_t	i;
 	char	*new_str;
 
-	if (str == NULL || str[0] == '\0')
-	{
-		free(str);
-		return (NULL);
-	}
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
@@ -94,7 +97,9 @@ char	*delete_last_line(char *str)
 		free(str);
 		return (NULL);
 	}
-	new_str = ft_substr(str, i + 1, ft_strlen(str));
+	if (str[i] == '\n')
+		i++;
+	new_str = ft_substr(&str[i], 0, ft_strlen(str + i));
 	if (new_str == NULL)
 		return (NULL);
 	free(str);
@@ -119,10 +124,6 @@ char	*get_next_line(int fd)
 /*#include <fcntl.h>//open
 #include <stdio.h>
 
-__attribute__((destructor))
-static void destructor() {
-	system("leaks -q a.out");
-}
 int main(void)
 {
 	char 	*str;
@@ -130,12 +131,12 @@ int main(void)
 	size_t 	i;
 
 	i = 0;
-	fd = open("../null.txt", O_RDONLY);
+	fd = open("test/test.txt", O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(fd);
 //		printf("[%zu] : %s\n-------------\n", i, str);
-		printf("str : [%s]\n", str);
+		printf("%s", str);
 		if (str == NULL)
 			break;
 		free(str);
@@ -143,6 +144,5 @@ int main(void)
 	}
 	close(fd);
 //	system("leaks a.out");
-	return (0);
 }*/
 //-fsanitize=address -g
