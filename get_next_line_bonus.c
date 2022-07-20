@@ -104,7 +104,7 @@ char	*delete_last_line(char *str)
 char	*get_next_line(int fd)
 {
 	static char	*str;
-	char		*rtn_str;
+	char		*rtn_str[FOPEN_MAX];
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
