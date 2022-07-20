@@ -68,17 +68,12 @@ char	*get_one_line(char *str)
 		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
-	{
 		i++;
-	}
 	if (str[i] == '\n')
 		i++;
 	rtn_str = ft_substr(str, 0, i);
 	if (rtn_str == NULL)
-	{
-		free(str);
 		return (NULL);
-	}
 	return (rtn_str);
 }
 
@@ -99,7 +94,7 @@ char	*delete_last_line(char *str)
 	}
 	if (str[i] == '\n')
 		i++;
-	new_str = ft_substr(&str[i], 0, ft_strlen(str + i));
+	new_str = ft_substr(&str[i], 0, ft_strlen(&str[i]));
 	if (new_str == NULL)
 		return (NULL);
 	free(str);
@@ -131,7 +126,7 @@ int main(void)
 	size_t 	i;
 
 	i = 0;
-	fd = open("test/test.txt", O_RDONLY);
+	fd = open("test/text00.txt", O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(fd);
