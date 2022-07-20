@@ -16,11 +16,15 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	if (str == NULL)
+		return (0);
 	i = 0;
 	while (str[i] != '\0')
 		i++;
 	return (i);
 }
+
+//add str == NULL
 
 static size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 {
@@ -74,14 +78,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*rtn_str;
 	size_t	len_rtn_str;
 
-	if (s1 == NULL)
-	{
-		s1 = (char *) malloc(sizeof(char) * 1);
-		if (s1 == NULL)
-			return (NULL);
-		s1[0] = '\0';
-		free(s1);
-	}
 	len_rtn_str = ft_strlen(s1) + ft_strlen(s2);
 	rtn_str = (char *) malloc (sizeof(char) * (len_rtn_str + 1));
 	if (rtn_str == NULL)
@@ -90,33 +86,23 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_strlcat(rtn_str, s2, len_rtn_str + 1);
 	return (rtn_str);
 }
-//if (s1 == NULL)の処理がないとファイルがからの時にうまくいかない
-//s1[0] = '\0'をいれてfreeしないとごみが入ってしまう
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t			i;
-	char			*new_s;
-	char			*rtn_str;
-	unsigned int	len_s;
+	char	*rtn_str;
+	size_t	len_s;
 
-	i = 0;
-	new_s = (char *) s;
-	len_s = (unsigned int)ft_strlen(s);
+	if (s == NULL)
+		return (NULL);
+	len_s = ft_strlen(s);
 	if (len_s < start)
-	{
-		rtn_str = (char *) malloc(sizeof(char) * 1);
-		if (rtn_str == NULL)
-			return (NULL);
-		rtn_str[0] = '\0';
-		return (rtn_str);
-	}
-	rtn_str = (char *) malloc (sizeof(char) * (ft_strlen(s) - start + 1));
+		return (ft_substr("", 0, 1));
+	if (len > len_s - start)
+		len = len_s - start;
+	rtn_str = (char *) malloc (sizeof(char) * (len + 1));
 	if (rtn_str == NULL)
 		return (NULL);
-	while (i < len && new_s[start] != '\0')
-		rtn_str[i++] = new_s[start++];
-	rtn_str[i] = '\0';
+	ft_strlcpy(rtn_str, &s[start], len + 1);
 	return (rtn_str);
 }
 
