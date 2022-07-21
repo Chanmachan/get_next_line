@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_strchr(char *s, int c)
 {
@@ -101,7 +101,7 @@ char	*delete_last_line(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str[1024];
+	static char	*str[OPEN_MAX];
 	char		*rtn_str;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
