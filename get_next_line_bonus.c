@@ -12,8 +12,6 @@
 
 #include "get_next_line.h"
 
-#include <stdio.h>
-
 static char	*ft_strchr(char *s, int c)
 {
 	char	*new_s;
