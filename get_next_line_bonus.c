@@ -99,8 +99,6 @@ char	*delete_last_line(char *str)
 	return (new_str);
 }
 
-#include <stdio.h>
-
 char	*get_next_line(int fd)
 {
 	static char	*str[1024];
