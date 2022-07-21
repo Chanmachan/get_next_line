@@ -12,6 +12,8 @@
 
 #include "get_next_line.h"
 
+#include <stdio.h>
+
 static char	*ft_strchr(char *s, int c)
 {
 	char	*new_s;
@@ -101,35 +103,70 @@ char	*delete_last_line(char *str)
 	return (new_str);
 }
 
+#include <stdio.h>
+
 char	*get_next_line(int fd)
 {
-	static char	*str;
-	char		*rtn_str[FOPEN_MAX];
+	static char	*str[1024];
+	char		*rtn_str;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	str = read_lines(str, fd);
-	if (!str)
+	str[fd] = read_lines(str[fd], fd);
+	if (!str[fd])
 		return (NULL);
-	rtn_str = get_one_line(str);
-	str = delete_last_line(str);
+	rtn_str = get_one_line(str[fd]);
+	str[fd] = delete_last_line(str[fd]);
 	return (rtn_str);
 }
 
 /*#include <fcntl.h>//open
 #include <stdio.h>
 
-int main(void)
+int	main(void)
+{
+	char	*line;
+	int		i;
+	int		fd1;
+//	int		fd2;
+//	int		fd3;
+	fd1 = open("test/text00.txt", O_RDONLY);
+//	fd2 = open("test/text00.txt", O_RDONLY);
+//	fd3 = open("test/41_with_nl.txt", O_RDONLY);
+	i = 1;
+	while (i < 7)
+	{
+		line = get_next_line(fd1);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+//		line = get_next_line(fd2);
+//		printf("line [%02d]: %s", i, line);
+//		free(line);
+//		line = get_next_line(fd3);
+//		printf("line [%02d]: %s", i, line);
+//		free(line);
+		i++;
+	}
+	close(fd1);
+//	close(fd2);
+//	close(fd3);
+	system("leaks -q a.out");
+	return (0);
+ }*/
+
+/*int main(void)
 {
 	char 	*str;
-	int 	fd;
+	int 	fd[5];
 	size_t 	i;
 
 	i = 0;
-	fd = open("test/text00.txt", O_RDONLY);
+	fd[1] = open("test/41_no_nl.txt", O_RDONLY);
+	fd[0] = open("test/text00.txt", O_RDONLY);
+	printf("fd : %d\n", fd[1]);
 	while (1)
 	{
-		str = get_next_line(fd);
+		str = get_next_line(fd[0]);
 //		printf("[%zu] : %s\n-------------\n", i, str);
 		printf("%s", str);
 		if (str == NULL)
@@ -137,7 +174,30 @@ int main(void)
 		free(str);
 		i++;
 	}
-	close(fd);
+	while (1)
+	{
+		str = get_next_line(fd[1]);
+//		printf("[%zu] : %s\n-------------\n", i, str);
+		printf("%s", str);
+		if (str == NULL) {
+			break;
+		}
+		free(str);
+		i++;
+	}
+	while (1)
+	{
+		str = get_next_line(fd[2]);
+//		printf("[%zu] : %s\n-------------\n", i, str);
+		printf("%s", str);
+		if (str == NULL) {
+			break;
+		}
+		free(str);
+		i++;
+	}
+	close(fd[0]);
+	close(fd[1]);
 //	system("leaks a.out");
 }*/
 //-fsanitize=address -g
