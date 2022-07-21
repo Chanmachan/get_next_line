@@ -95,8 +95,6 @@ char	*delete_last_line(char *str)
 	if (str[i] == '\n')
 		i++;
 	new_str = ft_substr(&str[i], 0, ft_strlen(&str[i]));
-	if (new_str == NULL)
-		return (NULL);
 	free(str);
 	return (new_str);
 }
