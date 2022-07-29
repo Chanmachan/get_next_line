@@ -41,7 +41,7 @@ char	*read_lines(char *str, int fd)
 	rd_bytes = 1;
 	while (rd_bytes != 0 && !ft_strchr(str, '\n'))
 	{
-		buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		buf = (char *) malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 		if (buf == NULL)
 			return (NULL);
 		rd_bytes = read(fd, buf, BUFFER_SIZE);
@@ -96,7 +96,10 @@ char	*delete_last_line(char *str)
 		i++;
 	new_str = ft_substr(&str[i], 0, ft_strlen(&str[i]));
 	if (new_str == NULL)
+	{
+		free(str);
 		return (NULL);
+	}
 	free(str);
 	return (new_str);
 }
@@ -106,11 +109,14 @@ char	*get_next_line(int fd)
 	static char	*str;
 	char		*rtn_str;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if ((size_t)BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	str = read_lines(str, fd);
 	if (!str)
+	{
+		free(str);
 		return (NULL);
+	}
 	rtn_str = get_one_line(str);
 	str = delete_last_line(str);
 	return (rtn_str);
@@ -126,7 +132,7 @@ int main(void)
 	size_t 	i;
 
 	i = 0;
-	fd = open("test/text00.txt", O_RDONLY);
+	fd = open("test/test.txt", O_RDONLY);
 	while (1)
 	{
 		str = get_next_line(fd);
