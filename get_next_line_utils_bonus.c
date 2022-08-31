@@ -84,6 +84,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	ft_strlcpy(rtn_str, s1, ft_strlen(s1) + 1);
 	ft_strlcat(rtn_str, s2, len_rtn_str + 1);
+	free(s1);
 	return (rtn_str);
 }
 

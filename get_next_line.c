@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static char	*ft_strchr(char *s, int c)
 {
@@ -36,14 +37,13 @@ char	*read_lines(char *str, int fd)
 {
 	char		*buf;
 	ssize_t		rd_bytes;
-	char		*tmp;
 
 	rd_bytes = 1;
+	buf = (char *) malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
+	if (buf == NULL)
+		return (NULL);
 	while (rd_bytes != 0 && !ft_strchr(str, '\n'))
 	{
-		buf = (char *) malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
-		if (buf == NULL)
-			return (NULL);
 		rd_bytes = read(fd, buf, BUFFER_SIZE);
 		if (rd_bytes == -1)
 		{
@@ -51,11 +51,9 @@ char	*read_lines(char *str, int fd)
 			return (NULL);
 		}
 		buf[rd_bytes] = '\0';
-		tmp = str;
 		str = ft_strjoin(str, buf);
-		free(tmp);
-		free(buf);
 	}
+	free(buf);
 	return (str);
 }
 
@@ -108,13 +106,15 @@ char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		*rtn_str;
+	char		*tmp;
 
 	if ((size_t)BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
+	tmp = str;
 	str = read_lines(str, fd);
 	if (!str)
 	{
-		free(str);
+		free(tmp);
 		return (NULL);
 	}
 	rtn_str = get_one_line(str);
@@ -139,11 +139,15 @@ int main(void)
 //		printf("[%zu] : %s\n-------------\n", i, str);
 		printf("%s", str);
 		if (str == NULL)
+		{
+			free(str);
 			break;
+		}
 		free(str);
 		i++;
 	}
 	close(fd);
-//	system("leaks a.out");
+	system("leaks -q a.out");
+	return (0);
 }*/
 //-fsanitize=address -g
