@@ -108,7 +108,7 @@ char	*get_next_line(int fd)
 	char		*rtn_str;
 	char		*tmp;
 
-	if ((size_t)BUFFER_SIZE <= 0 || fd < 0)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
 	tmp = str;
 	str = read_lines(str, fd);
